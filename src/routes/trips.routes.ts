@@ -3,11 +3,11 @@
 import { Router } from "express";
 import { tripsController } from "../controllers/trips.controller";
 import { validate } from "../middleware/validate";
-import { tripsSchema } from "../validators/trips.schema";
+import { tripSchema } from "../validators/trips.schema";
 
 const router = Router();
 
-router.post("/", validate(tripsSchema), tripsController.create);
+router.post("/", validate(tripSchema), tripsController.create);
 router.get("/", tripsController.getAll);
 
 export default router;

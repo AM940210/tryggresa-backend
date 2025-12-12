@@ -10,7 +10,7 @@ export const validate =
         if (!parsed.success) {
             return res.status(400).json({
                 error: "Validation failed",
-                details: parsed.error.errors,
+                details: parsed.error.issues,
             });
         }
 

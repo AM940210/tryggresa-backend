@@ -10,4 +10,4 @@ export const tripSchema = z.object({
     wheelchair: z.boolean()
 });
 
-export type TrypInput = z.infer<typeof tripSchema>;
+export type TripInput = z.infer<typeof tripSchema>;
