@@ -1,0 +1,1 @@
+// Zod schema för att validera inkommande request-body.

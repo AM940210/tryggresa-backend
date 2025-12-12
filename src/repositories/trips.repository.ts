@@ -1,0 +1,1 @@
+// Alla kommunikation med databasen (Prisma).
