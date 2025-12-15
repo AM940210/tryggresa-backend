@@ -28,5 +28,26 @@ export const tripsController = {
         } catch (err) {
             next(err);
         }
+    },
+
+    async getAvailableTimes(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { date, time } = req.body;
+
+            // Fake tider just nu
+            const times = [
+                "09:00",
+                "09:30",
+                "10:00",
+                "10:30",
+                "11:00",
+                "11:30",
+                "12:00"
+            ];
+
+            res.json({ times });
+        } catch (err) {
+            next(err);
+        }
     }
 };
