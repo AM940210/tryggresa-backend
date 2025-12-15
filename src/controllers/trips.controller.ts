@@ -6,7 +6,16 @@ export const tripsController = {
     async create(req: Request, res: Response, next: NextFunction) {
         try {
             const trip = await tripsService.createTrip(req.body);
-            res.json(trip);
+
+            // Dynamiskt svar beronde på rullstol
+            const message = trip.wheelchair
+                ? "Rullstolsplats är registrerad och fordon med ramp skickas."
+                : "Ingen rullstolsplats behövs.";
+
+            res.json({
+                ...trip,
+                message
+            });
         } catch (err) {
             next(err);
         }
