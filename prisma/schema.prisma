@@ -15,4 +15,5 @@ model Trip {
   toAddress   String?
   people      Int
   wheelchair  Boolean
+  tripCategory String?
 }

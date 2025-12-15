@@ -6,8 +6,9 @@ export const tripSchema = z.object({
     time: z.string(),
     fromAddress: z.string().optional(),
     toAddress: z.string().optional(),
-    people: z.number().min(1),
-    wheelchair: z.boolean()
+    people: z.coerce.number().min(1),
+    wheelchair: z.boolean(),
+    tripCategory: z.string().optional(),
 });
 
 export type TripInput = z.infer<typeof tripSchema>;
