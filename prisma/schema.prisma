@@ -11,6 +11,8 @@ model Trip {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   date        String
   time        String
+  returnDate  String?
+  returnTime  String?
   fromAddress String?
   toAddress   String?
   people      Int

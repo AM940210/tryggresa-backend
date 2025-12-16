@@ -3,24 +3,52 @@ import { Request, Response, NextFunction } from "express";
 import { tripsService } from "../services/trips.service";
 
 export const tripsController = {
+
+    // Skapa enkel resa eller tur & retur
     async create(req: Request, res: Response, next: NextFunction) {
         try {
-            const trip = await tripsService.createTrip(req.body);
+            const data = req.body;
 
-            // Dynamiskt svar beronde på rullstol
-            const message = trip.wheelchair
-                ? "Rullstolsplats är registrerad och fordon med ramp skickas."
-                : "Ingen rullstolsplats behövs.";
+            // Skapa utresa
+            const tripOut = await tripsService.createTrip({
+                date: data.date,
+                time: data.time,
+                fromAddress: data.fromAddress,
+                toAddress: data.toAddress,
+                people: data.people,
+                wheelchair: data.wheelchair,
+                tripCategory: data.tripCategory
+            });
+
+            let tripReturn = null;
+
+            // Skapa returresa om tur & retur är valt
+            if (data.returnDate && data.returnTime) {
+                tripReturn = await tripsService.createTrip({
+                    date: data.returnDate,
+                    time: data.returnTime,
+                    fromAddress: data.toAddress,
+                    toAddress: data.fromAddress,
+                    people: data.people,
+                    wheelchair: data.wheelchair,
+                    tripCategory: data.tripCategory
+                });
+            }
 
             res.json({
-                ...trip,
-                message
+                tripOut,
+                tripReturn,
+                message: data.wheelchair
+                    ? "Rullstolsplats registrerad – fordon med ramp skickas."
+                    : "Ingen rullstolsplats behövs."
             });
+
         } catch (err) {
             next(err);
         }
     },
 
+    // Hämta alla resor
     async getAll(_req: Request, res: Response, next: NextFunction) {
         try {
             const trips = await tripsService.getTrips();
@@ -30,11 +58,11 @@ export const tripsController = {
         }
     },
 
+    // Tillgängliga tider
     async getAvailableTimes(req: Request, res: Response, next: NextFunction) {
         try {
             const { date, time } = req.body;
 
-            // Fake tider just nu
             const times = [
                 "09:00",
                 "09:30",

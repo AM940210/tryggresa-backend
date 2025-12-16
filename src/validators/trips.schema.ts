@@ -4,6 +4,8 @@ import { z } from "zod";
 export const tripSchema = z.object({
     date: z.string(),
     time: z.string(),
+    returnDate: z.string().nullable().optional(),
+    returnTime: z.string().nullable().optional(),
     fromAddress: z.string().optional(),
     toAddress: z.string().optional(),
     people: z.coerce.number().min(1),
