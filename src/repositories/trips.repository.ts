@@ -4,7 +4,11 @@ import { TripInput } from "../validators/trips.schema";
 
 export const tripsRepository = {
     create(data: TripInput) {
-        return prisma.trip.create({ data });
+        return prisma.trip.create({ 
+            data: {
+                ...data,
+            }
+        });
     },
 
     findAll() {

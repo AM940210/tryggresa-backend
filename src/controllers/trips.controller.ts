@@ -9,7 +9,7 @@ export const tripsController = {
         try {
             const data = req.body;
 
-            // Skapa utresa
+            // Skapa utresa (ALLTID pris 125)
             const tripOut = await tripsService.createTrip({
                 date: data.date,
                 time: data.time,
@@ -17,7 +17,8 @@ export const tripsController = {
                 toAddress: data.toAddress,
                 people: data.people,
                 wheelchair: data.wheelchair,
-                tripCategory: data.tripCategory
+                tripCategory: data.tripCategory,
+                price: 125
             });
 
             let tripReturn = null;
@@ -31,13 +32,19 @@ export const tripsController = {
                     toAddress: data.fromAddress,
                     people: data.people,
                     wheelchair: data.wheelchair,
-                    tripCategory: data.tripCategory
+                    tripCategory: data.tripCategory,
+                    price: 125
                 });
             }
+
+            const totalPrice = tripReturn
+                ? tripOut.price + (tripReturn?.price ?? 0)
+                : tripOut.price;
 
             res.json({
                 tripOut,
                 tripReturn,
+                totalPrice,
                 message: data.wheelchair
                     ? "Rullstolsplats registrerad – fordon med ramp skickas."
                     : "Ingen rullstolsplats behövs."
@@ -64,13 +71,8 @@ export const tripsController = {
             const { date, time } = req.body;
 
             const times = [
-                "09:00",
-                "09:30",
-                "10:00",
-                "10:30",
-                "11:00",
-                "11:30",
-                "12:00"
+                "09:00", "09:30", "10:00",
+                "10:30", "11:00", "11:30", "12:00"
             ];
 
             res.json({ times });
