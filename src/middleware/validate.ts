@@ -14,6 +14,6 @@ export const validate =
             });
         }
 
-        req.body = parsed.data;
-        next();
+        req.body = parsed.data; // endats validerad data
+        next(); // gå vidare till controller
     };
