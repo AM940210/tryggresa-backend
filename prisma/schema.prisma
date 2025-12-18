@@ -1,18 +1,23 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
-model Trip {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  from        String
-  to          String
-  date        String
-  time        String
-  passengers  Int
-  wheelchair  Boolean
+generator client {
+  provider = "prisma-client-js"
 }
+
+model Trip {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  date         String
+  time         String
+  returnDate   String?
+  returnTime   String?
+  fromAddress  String?
+  toAddress    String?
+  people       Int
+  wheelchair   Boolean
+  tripCategory String?
+  price        Int @default(125)   // 👈 ADD THIS!
+}
+
