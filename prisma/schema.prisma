@@ -18,6 +18,13 @@ model Trip {
   people       Int
   wheelchair   Boolean
   tripCategory String?
-  price        Int @default(125)   // 👈 ADD THIS!
+  price        Int @default(125)
+}
+
+model User {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  email     String @unique
+  password  String
+  createdAt DateTime @default(now())
 }
 
