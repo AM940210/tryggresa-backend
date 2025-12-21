@@ -1,6 +1,7 @@
 import { Router } from "express";
 import bcrypt from "bcrypt";
 import prisma from "../lib/prisma";
+import jwt from "jsonwebtoken";
 
 const router = Router();
 
@@ -44,6 +45,41 @@ router.post("/register", async (req, res) => {
         return res.status(500).json({
             message: "Serverfel",
         });
+    }
+});
+
+// Login
+router.post("/login", async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({ message: "E-post och lösenord krävs" });
+        }
+
+        const user = await prisma.user.findUnique({
+            where: { email },
+        });
+
+        if (!user) {
+            return res.status(401).json({ message: "Fel e-post eller lösenord" });
+        }
+
+        const isValid = await bcrypt.compare(password, user.password);
+        if (!isValid) {
+            return res.status(401).json({ message: "Fel e-post eller lösenord" });
+        }
+
+        const token = jwt.sign(
+            { userId: user.id, email: user.email },
+            process.env.JWT_SECRET as string,
+            { expiresIn: "7d"}
+        );
+
+        return res.json({ token });
+    } catch (error) {
+        console.error("LOGIN ERROR:", error);
+        return res.status(500).json({ message: "Serverfel" });
     }
 });
 
