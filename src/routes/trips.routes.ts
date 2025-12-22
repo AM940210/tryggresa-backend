@@ -5,6 +5,7 @@ import { tripsController } from "../controllers/trips.controller";
 import { validate } from "../middleware/validate";
 import { tripSchema } from "../validators/trips.schema";
 import { availableTimesSchema } from "../validators/availableTimes.schema";
+import { authMiddleware } from "../middleware/auth";
 
 const router = Router();
 
@@ -17,12 +18,17 @@ router.post (
 
 // CREATE TRIP (med validering)
 router.post(
-    "/", 
+    "/",
+    authMiddleware, 
     validate(tripSchema), 
     tripsController.create
 );
 
 // GET ALL
-router.get("/", tripsController.getAll);
+router.get(
+    "/my-bookings",
+    authMiddleware, 
+    tripsController.getMyBookings
+);
 
 export default router;
