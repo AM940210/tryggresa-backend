@@ -5,12 +5,14 @@ import { tripsService } from "../services/trips.service";
 export const tripsController = {
 
     // Skapa enkel resa eller tur & retur
-    async create(req: Request, res: Response, next: NextFunction) {
+    async create(req: any, res: Response, next: NextFunction) {
         try {
             const data = req.body;
+            const userId = req.user!.userId;
 
             // Skapa utresa (ALLTID pris 125)
             const tripOut = await tripsService.createTrip({
+                userId,
                 date: data.date,
                 time: data.time,
                 fromAddress: data.fromAddress,
@@ -18,7 +20,7 @@ export const tripsController = {
                 people: data.people,
                 wheelchair: data.wheelchair,
                 tripCategory: data.tripCategory,
-                price: 125
+                price: 125,
             });
 
             let tripReturn = null;
@@ -26,6 +28,7 @@ export const tripsController = {
             // Skapa returresa om tur & retur är valt
             if (data.returnDate && data.returnTime) {
                 tripReturn = await tripsService.createTrip({
+                    userId,
                     date: data.returnDate,
                     time: data.returnTime,
                     fromAddress: data.toAddress,
@@ -33,23 +36,14 @@ export const tripsController = {
                     people: data.people,
                     wheelchair: data.wheelchair,
                     tripCategory: data.tripCategory,
-                    price: 125
+                    price: 125,
                 });
             }
-
-            const totalPrice = tripReturn
-                ? tripOut.price + (tripReturn?.price ?? 0)
-                : tripOut.price;
 
             res.json({
                 tripOut,
                 tripReturn,
-                totalPrice,
-                message: data.wheelchair
-                    ? "Rullstolsplats registrerad – fordon med ramp skickas."
-                    : "Ingen rullstolsplats behövs."
             });
-
         } catch (err) {
             next(err);
         }
@@ -68,16 +62,20 @@ export const tripsController = {
     // Tillgängliga tider
     async getAvailableTimes(req: Request, res: Response, next: NextFunction) {
         try {
-            const { date, time } = req.body;
-
-            const times = [
-                "09:00", "09:30", "10:00",
-                "10:30", "11:00", "11:30", "12:00"
-            ];
-
-            res.json({ times });
+            res.json({ times: ["09:00", "09:30", "10:00"] });
         } catch (err) {
             next(err);
         }
-    }
+    },
+
+    async getMyBookings(req: any, res: Response, next: NextFunction
+    ) {
+        try {
+            const userId = req.user.userId;
+            const trips = await tripsService.getMyTrips(userId);
+            res.json(trips);
+        } catch (err) {
+            next(err);
+        }
+    },
 };

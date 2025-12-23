@@ -2,6 +2,8 @@ import { z } from "zod";
 
 export const tripSchema = z
   .object({
+    userId: z.string(),
+
     date: z.string(),
     time: z.string(),
 
