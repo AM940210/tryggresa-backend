@@ -23,4 +23,13 @@ export const tripsRepository = {
       orderBy: { date: "desc" },
     });
   },
+
+  async findBookedTimesByDate(date: string) {
+    const trips = await prisma.trip.findMany({
+      where: { date },
+      select: { time: true },
+    });
+
+    return trips.map(t => t.time);
+  }
 };
