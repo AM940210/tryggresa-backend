@@ -1,9 +1,9 @@
 // Alla kommunikation med databasen (Prisma).
 import prisma from "../lib/prisma";
-import { TripInput } from "../validators/trips.schema";
+import { CreateTripInput } from "../services/trips.service";
 
 export const tripsRepository = {
-  create(data: TripInput) {
+  create(data: CreateTripInput) {
     return prisma.trip.create({
       data: {
         ...data,
