@@ -43,6 +43,10 @@ export const tripsController = {
             res.json({
                 tripOut,
                 tripReturn,
+                totalPrice: tripReturn ? 250 : 125,
+                message: data.wheelchair
+                ? "Rullstolsplats registrerad - fordon med ramp skickas."
+                : "Ingen rullstolsplats behövs.",
             });
         } catch (err) {
             next(err);
@@ -62,7 +66,18 @@ export const tripsController = {
     // Tillgängliga tider
     async getAvailableTimes(req: Request, res: Response, next: NextFunction) {
         try {
-            res.json({ times: ["09:00", "09:30", "10:00"] });
+            res.json({ 
+                times: [
+                    "08:00", "08:30",
+                    "09:00", "09:30", 
+                    "10:00", "10:30",
+                    "11:00", "11:30",
+                    "12:00",
+                    "13:00", "13:30",
+                    "14:00", "14:30",
+                    "15:00"
+                ], 
+            });
         } catch (err) {
             next(err);
         }
