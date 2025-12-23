@@ -86,4 +86,18 @@ export const tripsController = {
             next(err);
         }
     },
+
+    async cancelTrip(req: any, res:Response, next: NextFunction) {
+        try {
+            const userId = req.user.userId;
+            const tripId = req.params.id;
+
+            await tripsService.cancelTrip(tripId, userId);
+
+            res.json({ message: "Resan är avbokad"});
+        } catch (err) {
+            next(err);
+        }
+    },
+        
 };

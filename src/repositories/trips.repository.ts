@@ -31,5 +31,14 @@ export const tripsRepository = {
     });
 
     return trips.map(t => t.time);
+  },
+
+  async deleteByIdAndUser(tripId: string, userId: string) {
+    return prisma.trip.deleteMany({
+      where: {
+        id: tripId,
+        userId,
+      },
+    });
   }
 };

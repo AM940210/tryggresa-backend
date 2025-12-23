@@ -31,4 +31,11 @@ router.get(
     tripsController.getMyBookings
 );
 
+// CANCEL TRIP
+router.delete(
+    "/:id",
+    authMiddleware,
+    tripsController.cancelTrip
+);
+
 export default router;

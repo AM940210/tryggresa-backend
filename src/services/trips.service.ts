@@ -18,6 +18,10 @@ export const tripsService = {
     return tripsRepository.findByUserId(userId);
   },
 
+  async cancelTrip(tripId: string, userId: string) {
+    return tripsRepository.deleteByIdAndUser(tripId,userId);
+  },
+
   // steg 4 dynamiska tider
   async getAvailableTimes(date: string) {
     const allTimes = generateAllTimes();
@@ -37,7 +41,6 @@ export const tripsService = {
     });
   },
 };
-
 
 export function generateAllTimes() {
   const times: string[] = [];
