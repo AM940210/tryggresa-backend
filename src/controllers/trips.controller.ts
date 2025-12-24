@@ -13,6 +13,9 @@ export const tripsController = {
             // Skapa utresa (ALLTID pris 125)
             const tripOut = await tripsService.createTrip({
                 userId,
+                firstName: data.firstName,
+                lastName: data.lastName,
+
                 date: data.date,
                 time: data.time,
                 fromAddress: data.fromAddress,
@@ -29,6 +32,9 @@ export const tripsController = {
             if (data.returnDate && data.returnTime) {
                 tripReturn = await tripsService.createTrip({
                     userId,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    
                     date: data.returnDate,
                     time: data.returnTime,
                     fromAddress: data.toAddress,

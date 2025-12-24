@@ -11,12 +11,17 @@ model Trip {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   userId       String   @db.ObjectId
 
+  firstName    String
+  lastName     String
+
   date         String
   time         String
   returnDate   String?
   returnTime   String?
+
   fromAddress  String?
   toAddress    String?
+  
   people       Int
   wheelchair   Boolean
   tripCategory String?

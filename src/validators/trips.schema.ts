@@ -2,6 +2,9 @@ import { z } from "zod";
 
 export const tripSchema = z
   .object({
+    firstName: z.string().min(1),
+    lastName: z.string().min(1),
+
     date: z.string(),
     time: z.string(),
 
@@ -13,8 +16,8 @@ export const tripSchema = z
 
     people: z.coerce.number().min(1),
     wheelchair: z.boolean(),
+    
     tripCategory: z.string().optional(),
-
     price: z.number().optional(),
   })
   .refine(
