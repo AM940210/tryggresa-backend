@@ -24,13 +24,13 @@ export const tripsRepository = {
     });
   },
 
-  async findBookedTimesByDate(date: string) {
+  async findBookedTimesByDate(date: string): Promise<string[]> {
     const trips = await prisma.trip.findMany({
       where: { date },
       select: { time: true },
     });
 
-    return trips.map(t => t.time);
+    return trips.map((t) => t.time);
   },
 
   async deleteByIdAndUser(tripId: string, userId: string) {

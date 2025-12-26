@@ -74,10 +74,15 @@ export const tripsController = {
         try {
             const { date } = req.body;
 
-            const times = await tripsService.getAvailableTimes(date);
-            res.json({ times });
+            if (!date) {
+                return res.status(400).json({ message: "Datum saknas" });
+            }
 
+            const times = await tripsService.getAvailableTimes(date);
+
+            res.json({ times });
         } catch (err) {
+            console.error("AVAILABLE TIMES ERROR:", err);
             next(err);
         }
     },

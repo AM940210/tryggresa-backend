@@ -22,10 +22,22 @@ export const tripsService = {
     return tripsRepository.deleteByIdAndUser(tripId,userId);
   },
 
-  // steg 4 dynamiska tider
+  // dynamiska tider
   async getAvailableTimes(date: string) {
+    if (!date) {
+      return [];
+    }
+
     const allTimes = generateAllTimes();
-    const bookedTimes = await tripsRepository.findBookedTimesByDate(date);
+
+    let bookedTimes: string[] = [];
+
+    try {
+      const bookedTimes = await tripsRepository.findBookedTimesByDate(date);
+    } catch (err) {
+      console.error("BOOKED TIMES ERROR:",err);
+      bookedTimes = [];
+    }
 
     const today = new Date().toISOString().split("T")[0];
     const nowTime = new Date().toTimeString().slice(0, 5);
