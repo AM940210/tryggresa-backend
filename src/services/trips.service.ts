@@ -23,12 +23,12 @@ export const tripsService = {
   },
 
   // dynamiska tider
-  async getAvailableTimes(date: string) {
+  async getAvailableTimes(date: string, tripCategory?: string) {
     if (!date) {
       return [];
     }
 
-    const allTimes = generateAllTimes();
+    const allTimes = generateAllTimes(tripCategory);
 
     let bookedTimes: string[] = [];
 
@@ -54,13 +54,22 @@ export const tripsService = {
   },
 };
 
-export function generateAllTimes() {
+export function generateAllTimes(tripCategory?: string) {
   const times: string[] = [];
 
-  let hour = 9;
+  let startHour = 6;
+  let endHour = 16;
+
+  // FÄRDTJÄNST HELA DAGEN
+  if (tripCategory === "färdtjänst") {
+    startHour = 0;
+    endHour = 23;
+  }
+
+  let hour = startHour;
   let minute = 0;
 
-  while (hour < 16) {
+  while (hour <= endHour) {
     const h = hour.toString().padStart(2, "0");
     const m = minute.toString().padStart(2, "0");
 

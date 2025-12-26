@@ -75,13 +75,16 @@ export const tripsController = {
     // Tillgängliga tider
     async getAvailableTimes(req: Request, res: Response, next: NextFunction) {
         try {
-            const { date } = req.body;
+            const { date, tripCategory } = req.body;
 
             if (!date) {
                 return res.status(400).json({ message: "Datum saknas" });
             }
 
-            const times = await tripsService.getAvailableTimes(date);
+            const times = await tripsService.getAvailableTimes(
+                date,
+                tripCategory
+            );
 
             res.json({ times });
         } catch (err) {
