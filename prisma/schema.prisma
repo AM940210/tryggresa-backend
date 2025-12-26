@@ -16,6 +16,7 @@ model Trip {
 
   date         String
   time         String
+  
   returnDate   String?
   returnTime   String?
 

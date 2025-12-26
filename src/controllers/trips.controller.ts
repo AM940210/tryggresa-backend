@@ -18,10 +18,13 @@ export const tripsController = {
 
                 date: data.date,
                 time: data.time,
-                fromAddress: data.fromAddress,
-                toAddress: data.toAddress,
+
+                fromAddress: data.fromAddress ?? null,
+                toAddress: data.toAddress ?? null,
+
                 people: data.people,
                 wheelchair: data.wheelchair,
+
                 tripCategory: data.tripCategory,
                 price: 125,
             });
@@ -41,7 +44,7 @@ export const tripsController = {
                     toAddress: data.fromAddress,
                     people: data.people,
                     wheelchair: data.wheelchair,
-                    tripCategory: data.tripCategory,
+                    tripCategory: data.tripCategory ?? null,
                     price: 125,
                 });
             }
