@@ -11,12 +11,12 @@ model Trip {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   userId       String   @db.ObjectId
 
-  firstName    String
-  lastName     String
+  firstName    String?
+  lastName     String?
 
   date         String
   time         String
-  
+
   returnDate   String?
   returnTime   String?
 
