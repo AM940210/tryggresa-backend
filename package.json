@@ -2,6 +2,8 @@
   "name": "tryggresa-backend",
   "version": "1.0.0",
   "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
   },
   "dependencies": {
@@ -20,5 +22,12 @@
     "prisma": "^6.19.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.0.0"
+  },
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "module": "NodeNext",
+    "target": "ES2022",
+    "moduleResolution": "NodeNext"
   }
 }
