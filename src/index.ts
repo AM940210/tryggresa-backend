@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import tripRoutes from "./routes/trips.routes";
 import authRoutes from "./routes/auth.routes";
+import { Request, Response } from "express";
+
 
 
 const app = express();
@@ -26,3 +28,8 @@ const PORT = 4000;
 app.listen(PORT, () => {
   console.log("Server running on http://localhost:4000");
 });
+
+app.get("/", (_req: Request, res: Response) => {
+  res.send("API running");
+});
+
