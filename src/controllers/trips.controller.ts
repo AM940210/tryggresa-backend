@@ -8,7 +8,7 @@ export const tripsController = {
     async create(req: any, res: Response, next: NextFunction) {
         try {
             const data = req.body;
-            const userId = req.user!.userId;
+            const userId = req.user ? req.user.id : null;
 
             // Skapa utresa (ALLTID pris 125)
             const tripOut = await tripsService.createTrip({

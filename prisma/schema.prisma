@@ -9,7 +9,7 @@ generator client {
 
 model Trip {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId       String   @db.ObjectId
+  userId       String?   @db.ObjectId
 
   firstName    String?
   lastName     String?
