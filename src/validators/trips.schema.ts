@@ -5,19 +5,19 @@ export const tripSchema = z
     firstName: z.string().min(1),
     lastName: z.string().min(1),
 
-    date: z.string(),
-    time: z.string(),
+    date: z.string().min(1),
+    time: z.string().min(1),
 
     returnDate: z.string().optional(),
     returnTime: z.string().optional(),
 
-    fromAddress: z.string(),
-    toAddress: z.string(),
+    fromAddress: z.string().optional(),
+    toAddress: z.string().optional(),
 
     people: z.coerce.number().min(1),
     wheelchair: z.boolean(),
-    
-    tripCategory: z.string().optional(),
+
+    tripCategory: z.enum(["sjukresa", "färdtjänst"]).optional(),
     price: z.number().optional(),
   })
   .refine(
