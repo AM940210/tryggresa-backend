@@ -8,7 +8,7 @@ export const tripsController = {
     async create(req: any, res: Response, next: NextFunction) {
         try {
             const data = req.body;
-            const userId = req.user ? req.user.id : null;
+            const userId = req.user.userId;
 
             // Skapa utresa (ALLTID pris 125)
             const tripOut = await tripsService.createTrip({
@@ -96,8 +96,12 @@ export const tripsController = {
     async getMyBookings(req: any, res: Response, next: NextFunction
     ) {
         try {
+            console.log("REQ.USER:", req.user);
             const userId = req.user.userId;
+            console.log("FETCHING TRIPS FOR USER:", userId);
+
             const trips = await tripsService.getMyTrips(userId);
+            console.log("FETCHING TRIPS FOR USER:", userId);
             res.json(trips);
         } catch (err) {
             next(err);

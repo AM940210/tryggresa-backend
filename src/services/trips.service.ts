@@ -33,7 +33,7 @@ export const tripsService = {
     let bookedTimes: string[] = [];
 
     try {
-      const bookedTimes = await tripsRepository.findBookedTimesByDate(date);
+      bookedTimes = await tripsRepository.findBookedTimesByDate(date);
     } catch (err) {
       console.error("BOOKED TIMES ERROR:",err);
       bookedTimes = [];
