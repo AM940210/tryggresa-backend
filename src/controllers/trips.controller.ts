@@ -96,7 +96,8 @@ export const tripsController = {
     async getMyBookings(req: any, res: Response, next: NextFunction
     ) {
         try {
-            console.log("REQ.USER:", req.user);
+            console.log("REQ.USER FROM JWT:", req.user);
+
             const userId = req.user.userId;
             console.log("FETCHING TRIPS FOR USER:", userId);
 
