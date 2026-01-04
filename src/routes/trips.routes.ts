@@ -19,6 +19,7 @@ router.post (
 // CREATE TRIP (med validering)
 router.post(
     "/",
+    authMiddleware,
     validate(tripSchema), 
     tripsController.create
 );
